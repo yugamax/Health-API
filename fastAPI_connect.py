@@ -11,6 +11,7 @@ import joblib
 import tensorflow as tf
 from tensorflow.keras.applications import MobileNetV2
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
+import uvicorn
 from PIL import Image
 
 tf.config.optimizer.set_jit(True) 
