@@ -55,14 +55,13 @@ label_encoder = joblib.load("models/label_encoder.joblib")
 
 def skd_run(contents1):
     try:
-        # Ensure the input is bytes before opening
         image = Image.open(io.BytesIO(contents1)).convert("RGB").resize((224, 224))
         img_array = np.array(image)
         img_array = np.expand_dims(img_array, axis=0)
         img_array = preprocess_input(img_array)
         return img_array
     except Exception as e:
-        print(f"Error in skd_run: {e}")
+        print(f"Error in pic loading")
         return None
 
 img_p = "pre_start_test_img/ring.jpg"
@@ -128,5 +127,4 @@ async def predict_heart_disease(input_data: HeartDiseaseInput):
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=8000)
-#, reload=True
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
