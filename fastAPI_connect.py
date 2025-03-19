@@ -111,3 +111,5 @@ async def predict_heart_disease(input_data: HeartDiseaseInput):
 
 app.include_router(sk_router, prefix="/image")
 app.include_router(disease_router, prefix="/disease")
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=10000)
