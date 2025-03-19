@@ -1,5 +1,7 @@
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+os.environ["TF_FORCE_GPU_ALLOW_GROWTH"] = "false"
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 
 from fastapi import FastAPI, APIRouter, HTTPException, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
