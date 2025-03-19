@@ -5,7 +5,7 @@ os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 
 from fastapi import FastAPI, APIRouter, HTTPException, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import ORJSONResponse
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import io
 import numpy as np
@@ -88,9 +88,9 @@ async def predict_skin_disease(file: UploadFile = File(...)):
         features = fe.predict(img_array)
         prediction = skin_model.predict(features)
         predicted_disease = label_encoder.inverse_transform([prediction])[0]
-        return ORJSONResponse(content={"result": predicted_disease.tolist()})
+        return JSONResponse(content={"result": predicted_disease.tolist()})
     except Exception as e:
-        return ORJSONResponse(content={"error": str(e)}, status_code=500)
+        return JSONResponse(content={"error": str(e)}, status_code=500)
 
 @disease_router.post("/predict/diabetes")
 async def predict_diabetes(input_data: DiabetesInput):
@@ -115,4 +115,4 @@ async def predict_heart_disease(input_data: HeartDiseaseInput):
 app.include_router(sk_router, prefix="/image")
 app.include_router(disease_router, prefix="/disease")
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=10000)
+    uvicorn.run(app, host="127.0.0.1", port=8000)
